@@ -3,7 +3,7 @@
 # 標題顯示
 title() {
     echo "╔══════════════════════════════════════════════════╗"
-    echo "║              Ubuntu Tools 綜合工具箱   v1.0      ║"
+    echo "║              Ubuntu Tools 綜合工具箱   v1.1      ║"
     echo "║                                                  ║"
     echo "║                 僅適配 24.04 LTS                 ║"
     echo "║                                    By. Chek      ║"
@@ -27,6 +27,9 @@ show_menu() {
     echo "9.  LibreNMS 繁體中文版 一鍵安裝 (Ubuntu 24.04)"
     echo "10. LAMP 一鍵安裝"
     echo "11. LAMP + WordPress 一鍵安裝"
+    echo "12. Nginx 反向代理 SSL自簽"
+    echo "13. Hardware System 硬體管理系統 一鍵安裝"
+    echo "14. Excel Chat 簡易訊息聊天  一鍵安裝"
     echo "——————————————————————————————————————————————————"
 }
 
@@ -46,6 +49,9 @@ read_option() {
         9) echo -e "  ▷  LibreNMS 繁體中文版 一鍵安裝 (Ubuntu 24.04)\\n  ▷  Port: 80、443" ; show_ ; step_9 ; show_ ;;
         10) echo -e "  ▷  LAMP 一鍵安裝\\n  ▷  Port: 80、443" ; show_ ; step_10 ; show_ ;;
         11) echo -e "  ▷  LAMP + WordPress 一鍵安裝\\n  ▷  Port: 80、443" ; show_ ; step_11 ; show_ ;;
+        12) echo -e "  ▷  Nginx 反向代理 SSL自簽\\n  ▷  Port: 80、443" ; show_ ; step_12 ; show_ ;;
+        13) echo -e "  ▷  Hardware System 硬體管理系統 一鍵安裝\\n  ▷  Port: 80、443" ; show_ ; step_13 ; show_ ;;
+        14) echo -e "  ▷  Excel Chat 簡易訊息聊天  一鍵安裝\\n  ▷  Port: 80、443" ; show_ ; step_14 ; show_ ;;
         *) echo " × 無效選擇，請重新輸入！" ; sleep 1 ; clear ; title ; show_menu ; read_option ;;
     esac
 }
@@ -194,6 +200,45 @@ step_11() {
     show_
     echo -e "\\n◎  教學檔案: https://raw.githubusercontent.com/zz22558822/LAMP/main/WordPress/WordPress%20架設教學.txt\\n"
 }
+
+# 12. Nginx 反向代理 SSL自簽
+step_12() {
+    sudo bash -c "$(wget -qO- https://raw.githubusercontent.com/zz22558822/Nginx_Re_Proxy_install/main/Nginx_Re_Proxy_install.sh)"
+}
+
+# 13. Hardware System 硬體管理系統 一鍵安裝
+step_13() {
+    while true; do
+        read -p "請選擇環境是否使用 venv 安裝 (Y: venv、N: 無venv 預設): " install_choice
+        install_choice=${install_choice:-n}  # 若用戶未輸入，則預設為 n
+        install_choice=$(echo "$install_choice" | tr '[:upper:]' '[:lower:]')  # 轉換為小寫
+        if [[ "$install_choice" == "y" || "$install_choice" == "n" ]]; then
+            break
+        else
+            echo "無效選擇，請輸入 'Y' 或 'N'！"
+        fi
+    done
+
+    if [[ "$install_choice" == "y" ]]; then
+        echo "◆  安裝 venv版本 Hardware System"
+        sudo bash -c "$(wget -qO- https://raw.githubusercontent.com/zz22558822/Hardware_System/main/SQL/Hardware_System_install_venv.sh)"
+        # 在這裡加上安裝並啟用的步驟
+    elif [[ "$install_choice" == "n" ]]; then
+        echo "◆  安裝 無venv版本 Hardware System"
+        sudo bash -c "$(wget -qO- https://raw.githubusercontent.com/zz22558822/Hardware_System/main/SQL/Hardware_System_install.sh)"
+    fi
+    show_
+    echo -e "\\n◎  教學檔案: https://github.com/zz22558822/Hardware_System\\n"
+}
+
+# 14. Excel Chat 簡易訊息聊天  一鍵安裝
+step_14() {
+    sudo bash -c "$(wget -qO- https://raw.githubusercontent.com/zz22558822/Excel_Chat/main/Excel_Chat_install.sh)"
+    show_
+    echo -e "\\n◎  教學檔案: https://github.com/zz22558822/Excel_Chat\\n"
+}
+
+
 
 
 # 執行主程式
