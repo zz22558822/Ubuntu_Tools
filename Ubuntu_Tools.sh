@@ -41,17 +41,18 @@ read_option() {
         1) echo "  ▷  安裝基礎軟體" ; show_ ; step_1 ; show_ ;;
         2) echo "  ▷  安裝 Docker" ; show_ ; step_2 ; show_ ;;
         3) echo "  ▷  Grype 一鍵掃描產出報告" ; show_ ; step_3 ; show_ ;;
-        4) echo -e "  ▷  Vaultwarden 一鍵安裝 + Nginx 反向代理\\n  ▷  Port: 80、443" ; show_ ; step_4 ; show_ ;;
-        5) echo -e "  ▷  SpeedTest-X 一鍵安裝\\n  ▷  Port: 8080" ; show_ ; step_5 ; show_ ;;
-        6) echo -e "  ▷  AdGuard Home 一鍵安裝 + 53 Port 占用排除\\n  ▷  Port: 53、80" ; show_ ; step_6 ; show_ ;;
-        7) echo -e "  ▷  Portainer v2.19.4 繁體中文版 一鍵安裝\\n  ▷  Port: 443、8000" ; show_ ; step_7 ; show_ ;;
-        8) echo -e "  ▷  StirlingPDF 一鍵安裝\\n  ▷  Port: 80" ; show_ ; step_8 ; show_ ;;
-        9) echo -e "  ▷  LibreNMS 繁體中文版 一鍵安裝 (Ubuntu 24.04)\\n  ▷  Port: 80、443" ; show_ ; step_9 ; show_ ;;
-        10) echo -e "  ▷  LAMP 一鍵安裝\\n  ▷  Port: 80、443" ; show_ ; step_10 ; show_ ;;
-        11) echo -e "  ▷  LAMP + WordPress 一鍵安裝\\n  ▷  Port: 80、443" ; show_ ; step_11 ; show_ ;;
-        12) echo -e "  ▷  Nginx 反向代理 SSL自簽\\n  ▷  Port: 80、443" ; show_ ; step_12 ; show_ ;;
-        13) echo -e "  ▷  Hardware System 硬體管理系統 一鍵安裝\\n  ▷  Port: 80、443" ; show_ ; step_13 ; show_ ;;
-        14) echo -e "  ▷  Excel Chat 簡易訊息聊天  一鍵安裝\\n  ▷  Port: 80、443" ; show_ ; step_14 ; show_ ;;
+        4) echo -e "  ▷  Bitwarden 一鍵安裝\\n  ▷  Port: 80、443" ; show_ ; step_4 ; show_ ;;
+        5) echo -e "  ▷  Vaultwarden 一鍵安裝 + Nginx 反向代理\\n  ▷  Port: 80、443" ; show_ ; step_5 ; show_ ;;
+        6) echo -e "  ▷  SpeedTest-X 一鍵安裝\\n  ▷  Port: 8080" ; show_ ; step_6 ; show_ ;;
+        7) echo -e "  ▷  AdGuard Home 一鍵安裝 + 53 Port 占用排除\\n  ▷  Port: 53、80" ; show_ ; step_7 ; show_ ;;
+        8) echo -e "  ▷  Portainer v2.19.4 繁體中文版 一鍵安裝\\n  ▷  Port: 443、8000" ; show_ ; step_8 ; show_ ;;
+        9) echo -e "  ▷  StirlingPDF 一鍵安裝\\n  ▷  Port: 80" ; show_ ; step_9 ; show_ ;;
+        10) echo -e "  ▷  LibreNMS 繁體中文版 一鍵安裝 (Ubuntu 24.04)\\n  ▷  Port: 80、443" ; show_ ; step_10 ; show_ ;;
+        11) echo -e "  ▷  LAMP 一鍵安裝\\n  ▷  Port: 80、443" ; show_ ; step_11 ; show_ ;;
+        12) echo -e "  ▷  LAMP + WordPress 一鍵安裝\\n  ▷  Port: 80、443" ; show_ ; step_12 ; show_ ;;
+        13) echo -e "  ▷  Nginx 反向代理 SSL自簽\\n  ▷  Port: 80、443" ; show_ ; step_13 ; show_ ;;
+        14) echo -e "  ▷  Hardware System 硬體管理系統 一鍵安裝\\n  ▷  Port: 80、443" ; show_ ; step_14 ; show_ ;;
+        15) echo -e "  ▷  Excel Chat 簡易訊息聊天  一鍵安裝\\n  ▷  Port: 80、443" ; show_ ; step_15 ; show_ ;;
         *) echo " × 無效選擇，請重新輸入！" ; sleep 1 ; clear ; title ; show_menu ; read_option ;;
     esac
 }
@@ -163,14 +164,19 @@ step_3() {
     sudo bash -c "cd Grype && wget -qO- https://raw.githubusercontent.com/zz22558822/grype_scan_script/main/grype_scan_script.sh | bash"
 }
 
-# 4. Vaultwarden 一鍵安裝 + Nginx 反向代理
+# 4. Bitwarden 一鍵安裝
 step_4() {
+    sudo bash -c "$(wget -qO- https://raw.githubusercontent.com/zz22558822/Bitwarden_Install/main/Bitwarden_Install.sh)"
+}
+
+# 5. Vaultwarden 一鍵安裝 + Nginx 反向代理
+step_5() {
     sudo bash -c "$(wget -qO- https://raw.githubusercontent.com/zz22558822/Vaultwarden_Install/main/Vaultwarden_Install.sh)"
 }
 
 
-# 5. SpeedTest-X 一鍵安裝
-step_5() {
+# 6. SpeedTest-X 一鍵安裝
+step_6() {
     while true; do
         read -p "請選擇安裝版本 (A: Apache、D: Docker 預設): " install_choice
         install_choice=${install_choice:-d}  # 若用戶未輸入，則預設為 d
@@ -192,34 +198,34 @@ step_5() {
     fi
 }
 
-# 6. AdGuard Home 一鍵安裝 + 53 Port 占用排除
-step_6() {
+# 7. AdGuard Home 一鍵安裝 + 53 Port 占用排除
+step_7() {
     sudo bash -c "$(wget -qO- https://github.com/zz22558822/AdGuard-Home-install/releases/download/upload/install_adguardhome.sh)"
 }
 
-# 7. Portainer v2.19.4 繁體中文版 一鍵安裝
-step_7() {
+# 8. Portainer v2.19.4 繁體中文版 一鍵安裝
+step_8() {
     sudo bash -c "$(wget -qO- https://raw.githubusercontent.com/zz22558822/Portainer_zh_TW_Install/main/Portainer_zh_TW_Install.sh)"
 }
 
-# 8. StirlingPDF 一鍵安裝 (更改圖示需瀏覽教學)
-step_8() {
+# 9. StirlingPDF 一鍵安裝 (更改圖示需瀏覽教學)
+step_9() {
     sudo bash -c "$(wget -qO- https://raw.githubusercontent.com/zz22558822/StirlingPDF_Install/main/StirlingPDF_Install.sh)"
     echo -e "\\n◎  教學檔案: https://raw.githubusercontent.com/zz22558822/StirlingPDF_Install/main/安裝教學.txt"
 }
 
-# 9. LibreNMS 繁體中文版 一鍵安裝 (Ubuntu 24.04)
-step_9() {
+# 10. LibreNMS 繁體中文版 一鍵安裝 (Ubuntu 24.04)
+step_10() {
     sudo bash -c "$(wget -qO- https://raw.githubusercontent.com/zz22558822/LibreNMS_Install/master/LibreNMS_Install.sh)"
 }
 
-# 10. LAMP 一鍵安裝
-step_10() {
+# 11. LAMP 一鍵安裝
+step_11() {
     sudo bash -c "$(wget -qO- https://raw.githubusercontent.com/zz22558822/LAMP/main/一鍵安裝LAMP.sh)"
 }
 
-# 11. LAMP + WordPress 一鍵安裝
-step_11() {
+# 12. LAMP + WordPress 一鍵安裝
+step_12() {
     sudo bash -c "$(wget -qO- https://raw.githubusercontent.com/zz22558822/LAMP/main/WordPress/一鍵安裝LAMP%2BWordPress.sh)"
     show_
     echo
@@ -230,13 +236,13 @@ step_11() {
     echo -e "\\n◎  教學檔案: https://raw.githubusercontent.com/zz22558822/LAMP/main/WordPress/WordPress%20架設教學.txt\\n"
 }
 
-# 12. Nginx 反向代理 SSL自簽
-step_12() {
+# 13. Nginx 反向代理 SSL自簽
+step_13() {
     sudo bash -c "$(wget -qO- https://raw.githubusercontent.com/zz22558822/Nginx_Re_Proxy_install/main/Nginx_Re_Proxy_install.sh)"
 }
 
-# 13. Hardware System 硬體管理系統 一鍵安裝
-step_13() {
+# 14. Hardware System 硬體管理系統 一鍵安裝
+step_14() {
     while true; do
         read -p "請選擇環境是否使用 venv 安裝 (Y: venv、N: 無venv 預設): " install_choice
         install_choice=${install_choice:-n}  # 若用戶未輸入，則預設為 n
@@ -260,8 +266,8 @@ step_13() {
     echo -e "\\n◎  教學檔案: https://github.com/zz22558822/Hardware_System\\n"
 }
 
-# 14. Excel Chat 簡易訊息聊天  一鍵安裝
-step_14() {
+# 15. Excel Chat 簡易訊息聊天  一鍵安裝
+step_15() {
     sudo bash -c "$(wget -qO- https://raw.githubusercontent.com/zz22558822/Excel_Chat/main/Excel_Chat_install.sh)"
     show_
     echo -e "\\n◎  教學檔案: https://github.com/zz22558822/Excel_Chat\\n"
