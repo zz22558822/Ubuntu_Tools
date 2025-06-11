@@ -112,11 +112,13 @@ step_1() {
 # 2. 安裝 Docker
 step_2() {
     # Docker 安裝
-    sudo apt install -y docker.io
+    sudo apt install -y curl docker.io
     # 更新 Docker-Compose V2
-    sudo apt remove -y docker-compose
-    sudo curl -L $(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .assets[0].browser_download_url) -o /usr/local/bin/docker-compose
-    sudo chmod +x /usr/local/bin/docker-compose
+	sudo apt remove -y docker-compose
+	COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)
+	sudo curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" \
+	  -o /usr/local/bin/docker-compose
+	sudo chmod +x /usr/local/bin/docker-compose
     # Docker 開機啟用
     sudo systemctl start docker
     sudo systemctl enable docker
