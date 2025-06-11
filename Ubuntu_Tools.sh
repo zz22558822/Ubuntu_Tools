@@ -112,19 +112,46 @@ step_1() {
 # 2. 安裝 Docker
 step_2() {
     # Docker 安裝
-    sudo apt install -y curl docker.io
-    # 更新 Docker-Compose V2
-	sudo apt remove -y docker-compose
-	COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)
-	sudo curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" \
-	  -o /usr/local/bin/docker-compose
-	sudo chmod +x /usr/local/bin/docker-compose
+    # # Docker 舊版安裝方法
+    # sudo apt install -y curl docker.io
+    # # Docker-Compose V1 安裝
+	# sudo apt remove -y docker-compose
+	# COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)
+	# sudo curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" \
+	#   -o /usr/local/bin/docker-compose
+	# sudo chmod +x /usr/local/bin/docker-compose
+
+    # 清理已安裝 Docker
+    sudo systemctl stop docker docker.socket containerd 2>/dev/null || true
+    sudo apt purge -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin 2>/dev/null || true
+    sudo rm -rf /var/lib/docker 2>/dev/null
+    sudo rm -rf /var/lib/containerd 2>/dev/null
+    sudo rm -f /etc/apt/keyrings/docker.asc 2>/dev/null
+    sudo rm -f /etc/apt/keyrings/docker.gpg 2>/dev/null
+    sudo rm -f /etc/apt/sources.list.d/docker.list 2>/dev/null
+    sudo apt autoremove -y
+    sudo apt clean
+
+    # Docker-Compose V2 安裝
+    sudo apt update -y
+    sudo apt install -y ca-certificates curl gnupg lsb-release
+    sudo install -m 0755 -d /etc/apt/keyrings
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    gpg --no-default-keyring --keyring /etc/apt/keyrings/docker.gpg --list-keys # 驗證用 可刪除
+    sudo chmod a+r /etc/apt/keyrings/docker.gpg
+    echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    cat /etc/apt/sources.list.d/docker.list
+    sudo apt update -y
+    sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
     # Docker 開機啟用
     sudo systemctl start docker
     sudo systemctl enable docker
     # Docker 加入群組
     sudo groupadd docker 2>/dev/null  # 如果群組已存在，避免錯誤訊息
-    sudo usermod -aG docker $USER
+    sudo usermod -aG docker "$USER"
     # 讓變更立即生效，避免卡在 newgrp
     sudo su - $USER -c "echo 'Docker 安裝完成，群組變更已生效。'"
 }
