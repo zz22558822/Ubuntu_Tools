@@ -25,7 +25,7 @@ show_menu() {
     echo "7.  AdGuard Home 一鍵安裝 + 53 Port 占用排除"
     echo "8.  Portainer v2.19.4 繁體中文版 一鍵安裝"
     echo "9.  StirlingPDF 一鍵安裝 (更改圖示請瀏覽教學)"
-    echo "10.  LibreNMS 繁體中文版 一鍵安裝 (Ubuntu 24.04)"
+    echo "10. LibreNMS 繁體中文版 一鍵安裝 (Ubuntu 24.04)"
     echo "11. LAMP 一鍵安裝"
     echo "12. LAMP + WordPress 一鍵安裝"
     echo "13. Nginx 反向代理 SSL自簽"
