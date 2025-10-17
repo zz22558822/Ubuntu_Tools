@@ -3,7 +3,7 @@
 # 標題顯示
 title() {
     echo "╔══════════════════════════════════════════════════╗"
-    echo "║              Ubuntu Tools 綜合工具箱   v1.1      ║"
+    echo "║              Ubuntu Tools 綜合工具箱   v1.2      ║"
     echo "║                                                  ║"
     echo "║                 僅適配 24.04 LTS                 ║"
     echo "║                                    By. Chek      ║"
@@ -19,7 +19,7 @@ show_menu() {
     echo "1.  安裝基礎軟體"
     echo "2.  安裝 Docker"
     echo "3.  Grype 一鍵掃描產出報告"
-    echo "4.  Bitwarden 一鍵安裝"
+    echo "4.  Bitwarden 一鍵安裝 + Nginx 反向代理"
     echo "5.  Vaultwarden 一鍵安裝 + Nginx 反向代理"
     echo "6.  SpeedTest-X 一鍵安裝"
     echo "7.  AdGuard Home 一鍵安裝 + 53 Port 占用排除"
@@ -42,7 +42,7 @@ read_option() {
         1) echo "  ▷  安裝基礎軟體" ; show_ ; step_1 ; show_ ;;
         2) echo "  ▷  安裝 Docker" ; show_ ; step_2 ; show_ ;;
         3) echo "  ▷  Grype 一鍵掃描產出報告" ; show_ ; step_3 ; show_ ;;
-        4) echo -e "  ▷  Bitwarden 一鍵安裝\\n  ▷  Port: 80、443" ; show_ ; step_4 ; show_ ;;
+        4) echo -e "  ▷  Bitwarden 一鍵安裝 + Nginx 反向代理\\n  ▷  Port: 80、443" ; show_ ; step_4 ; show_ ;;
         5) echo -e "  ▷  Vaultwarden 一鍵安裝 + Nginx 反向代理\\n  ▷  Port: 80、443" ; show_ ; step_5 ; show_ ;;
         6) echo -e "  ▷  SpeedTest-X 一鍵安裝\\n  ▷  Port: 8080" ; show_ ; step_6 ; show_ ;;
         7) echo -e "  ▷  AdGuard Home 一鍵安裝 + 53 Port 占用排除\\n  ▷  Port: 53、80" ; show_ ; step_7 ; show_ ;;
@@ -167,7 +167,7 @@ step_3() {
 
 # 4. Bitwarden 一鍵安裝
 step_4() {
-    sudo bash -c "$(wget -qO- https://raw.githubusercontent.com/zz22558822/Bitwarden_Install/main/Bitwarden_Install.sh)"
+    sudo bash -c "$(wget -qO- https://raw.githubusercontent.com/zz22558822/Bitwarden_Install/main/Bitwarden_Nginx_Install.sh)"
 }
 
 # 5. Vaultwarden 一鍵安裝 + Nginx 反向代理
